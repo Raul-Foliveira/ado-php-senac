@@ -1,3 +1,3 @@
 function nomesDoAdo() {
-    return [ "João da Silva", "Maria da Silva" ];
+    return [ "Raul Florentino de Oliveira", "Thiago Souza Lima", "Leonel Marques" ];
 }
