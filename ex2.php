@@ -29,5 +29,66 @@ Dica:
 ?>
 <!DOCTYPE html>
 <html>
-    <!-- Coloque o que precisar aqui. -->
+    <head>
+        <meta charset="UTF-8">
+		<title>Exercício - 2 (PhP)</title>
+    </head>
+        <body>
+        <?php
+                if (isset($_POST["nome"]) && isset($_POST["sexo"]) && isset($_POST["data-nascimento"])) {
+                    
+                    $nome = trim($_POST["nome"]);
+
+                    if ($nome !== "") {
+                        
+                        $sexo = $_POST["sexo"];
+                        if ($sexo === "M" || $sexo === "F") {
+                            
+                            $data_nascimento = $_POST["data-nascimento"];
+                            if (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $data_nascimento)) {
+                                
+                                $data_nascimento_dt = DateTime::createFromFormat("Y-m-d", $data_nascimento);
+                                
+                                if ($data_nascimento_dt && $data_nascimento_dt->format("Y-m-d") === $data_nascimento) {
+                                    
+                                    $hoje = new DateTime();
+                                    if ($data_nascimento_dt <= $hoje) {
+                                        
+                                        $idade_dt = $hoje->diff($data_nascimento_dt);
+                                        $idade = $idade_dt->y;
+                                        if ($idade <= 120) {
+                                            
+                                            $pronome = ($sexo === "M") ? "um garoto" : "uma garota";
+                                            
+                                            echo "<p>" . $nome . " é " . $pronome . " de " . $idade . " anos de idade.</p>";
+                                            
+                                        } else {
+                                            echo "<p>Errado</p>";
+                                        }
+                                        
+                                    } else {
+                                        echo "<p>Errado</p>";
+                                    }
+                                    
+                                } else {
+                                    echo "<p>Errado</p>";
+                                }
+                                
+                            } else {
+                                echo "<p>Errado</p>";
+                            }
+                            
+                        } else {
+                            echo "<p>Errado</p>";
+                        }
+                        
+                    } else {
+                        echo "<p>Errado</p>";
+                    }
+                    
+                } else {
+                    echo "<p>Errado</p>";
+                }
+        ?>
+</body>   
 </html>
