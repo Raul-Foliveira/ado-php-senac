@@ -45,5 +45,67 @@ Dica:
 ?>
 <!DOCTYPE html>
 <html>
-    <!-- Coloque o que precisar aqui. -->
+    <head>
+        <meta charset="UTF-8">
+		<title>Exercício - 1 (PhP)</title>
+    </head>
+<body>
+<?php
+		$telefone = $_GET["telefone"];
+
+		function formatarTelefone($telefone){
+			$ddd = substr($telefone, 0, 2);
+			$numero = substr($telefone, 2);
+
+			if(strlen($numero) == 8){
+				$numeroFormatado = substr($numero, 0, 4) . "-" . substr($numero, 4);
+			}else{
+				$numeroFormatado = substr($numero, 0, 5) . "-" . substr($numero, 5);
+			}
+
+			return "(" . $ddd . ") " . $numeroFormatado;
+		}
+
+		function validarTelefone($telefone){
+			if(strlen($telefone) != 10 && strlen($telefone) != 11){
+				return false;
+			}
+
+			if(!ctype_digit($telefone)){
+				return false;
+			}
+
+			$ddd = substr($telefone, 0, 2);
+			$numero = substr($telefone, 2);
+
+			if(!in_array($ddd, array("11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "24", "27", "28", "31", "32", "33", "34", "35", "37", "38", "41", "42", "43", "44", "45", "46", "47", "48", "49", "51", "53", "54", "55", "61", "62", "63", "64", "65", "66", "67", "68", "69", "71", "73", "74", "75", "77", "79", "81", "82", "83", "84", "85", "86", "87", "88", "89", "91", "92", "93", "94", "95", "96", "97", "98", "99"))){
+				return false;
+			}
+
+			if(strlen($telefone) == 11){
+				if(substr($numero, 0, 1) == "9" && substr($numero, 1, 1) != "0"){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				if(substr($numero, 0, 1) >= 2 && substr($numero, 0, 1) <= 8){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+		if(isset($telefone)){
+			if(validarTelefone($telefone)){
+				echo "<p>" . formatarTelefone($telefone) . "</p>";
+			}else{
+				echo "<p>Número inválido</p>";
+			}
+		}else{
+			echo "<p>Número inválido</p>";
+		}
+	?>
+</body>   
 </html>
